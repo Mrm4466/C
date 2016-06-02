@@ -127,6 +127,18 @@
 					}
 			}, false);
 			
+			var aud = mew Audio();
+			aud.addEventListener('loadeddata', function() {
+				aud.muted = false;
+			}, true);
+			
+			aud.addEventListener('ended', function() {
+				this.currentTime = 0;
+				this.play();
+			}, false);
+			aud.src = 'ChefMusic.wav'
+			aud.play();
+			
 			function createCheese() {
 				var loader = new THREE.JSONLoader();
 				loader.load( 'Food/Cheese.json', function ( geometry, materials ) {
