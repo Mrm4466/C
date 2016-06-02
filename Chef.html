@@ -1,0 +1,283 @@
+<html>
+	<head>
+		<title>Chef</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 75%; height: 75% }
+		</style>
+	</head>
+	<body>
+		<script src="https://ajax.googleapis.com/ajax/libs/threejs/r69/three.min.js"></script>
+		
+		<script>
+		
+				var foods = []
+
+				//Arrow key codes
+					var UP = 38;  
+					var DOWN = 40;
+					var LEFT = 37;
+					var RIGHT = 39;
+					var SPACE = 32;
+					
+					var W = 87;
+					var A = 65;
+					var S = 83;
+					var D = 68;
+
+				//Actions
+					var moveUp = false;
+					var moveDown = false;
+					var moveLeft = false;
+					var moveRight = false;
+					var spaceDown = false;
+					
+					var keyW = false;
+					var keyA = false;
+					var keyS = false;
+					var keyD = false;
+			
+	//Controls
+			window.addEventListener("keydown", function(event)
+			{
+				switch(event.keyCode)
+					{
+						case UP:
+							moveUp = true;
+							break;
+							
+						case DOWN:
+							moveDown = true;
+							break;
+							
+						case LEFT:
+							moveLeft = true;
+							break;  
+	    
+						case RIGHT:
+							moveRight = true;
+							break;
+	 
+						case SPACE:
+							spaceDown = true;
+							break;
+							
+						case W:
+							keyW = true;
+							break;  
+	    				
+						case A:
+							keyA = true;
+							break;
+							
+						case S:
+							keyS = true;
+							break;
+							
+						case D:
+							keyD = true;
+							break;
+	 
+						case SPACE:
+							spaceDown = true;
+							break;
+					}
+
+			}, false);
+
+			window.addEventListener("keyup", function(event)
+			{
+				switch(event.keyCode)
+					{
+						case UP:
+							moveUp = false;
+							break;
+							
+						case DOWN:
+							moveDown = false;
+							break;
+							
+						case LEFT:
+							moveLeft = false;
+							break;  
+	    
+						case RIGHT:
+							moveRight = false;
+							break;
+							
+						case SPACE:
+							spaceDown = false;
+							break;
+							
+						case W:
+							keyW = false;
+							break;  
+	    						
+						case A:
+							keyA = false;
+							break;
+							
+						case S:
+							keyS = false;
+							break;
+							
+						case D:
+							keyD = false;
+							break;
+					}
+			}, false);
+			
+			function createCheese() {
+				var loader = new THREE.JSONLoader();
+				loader.load( 'Food/Cheese.json', function ( geometry, materials ) {
+					var texture = THREE.ImageUtils.loadTexture( "Food/Cheese.png" );
+					var material = new THREE.MeshBasicMaterial( {map: texture} );
+						food = new THREE.Mesh( geometry, material );
+						food.scale.set( .5, .5, .5);
+						scene.add( food );
+					
+					food.position.y = 20;
+					food.position.z = 10;
+					food.position.x = Math.floor((Math.random() * 150) -99);
+				
+				food.update = function() {
+					this.translateY(-.3);
+				}
+				foods.push(food);
+			})}
+			
+			
+			function createPickles() {
+				var loader = new THREE.JSONLoader();
+				loader.load( 'Food/Pickles.json', function ( geometry, materials ) {
+					var texture = THREE.ImageUtils.loadTexture( "Food/Pickles.png" );
+					var material = new THREE.MeshBasicMaterial( {map: texture} );
+						food = new THREE.Mesh( geometry, material );
+						food.scale.set( .5, .5, .5);
+						scene.add( food );
+					
+					food.position.y = 20;
+					food.position.z = 10;
+					food.position.x = Math.floor((Math.random() * 100) -50);
+				
+				food.update = function() {
+					this.translateY(-.3);
+				}
+				foods.push(food);
+			})}
+			
+			
+			function createMeat() {
+				var loader = new THREE.JSONLoader();
+				loader.load( 'Food/Meat.json', function ( geometry, materials ) {
+					var texture = THREE.ImageUtils.loadTexture( "Food/Meat.png" );
+					var material = new THREE.MeshBasicMaterial( {map: texture} );
+						food = new THREE.Mesh( geometry, material );
+						food.scale.set( .5, .5, .5);
+						scene.add( food );
+					
+					food.position.y = 20;
+					food.position.z = 10;
+					food.position.x = Math.floor((Math.random() * 100) -50);
+				
+				food.update = function() {
+					this.translateY(-.3);
+				}
+				foods.push(food);
+			})}
+			
+			function createMayo() {
+				var loader = new THREE.JSONLoader();
+				loader.load( 'Food/Mayo.json', function ( geometry, materials ) {
+					var texture = THREE.ImageUtils.loadTexture( "Food/Mayo.png" );
+					var material = new THREE.MeshBasicMaterial( {map: texture} );
+						food = new THREE.Mesh( geometry, material );
+						food.scale.set( .4, .4, .4);
+						scene.add( food );
+					
+					food.position.y = 20;
+					food.position.z = 10;
+					food.position.x = Math.floor((Math.random() * 100) -50);
+				
+				food.update = function() {
+					this.translateY(-.3);
+				}
+				foods.push(food);
+			})}
+			
+			function makeFood() {
+			var foodType = Math.floor((Math.random() * 10) + 1)
+			if (foodType <= 2.5){createCheese()} else if (foodType > 2.5 && foodType <= 5){createPickles()} else if (foodType > 5 && foodType <= 7.5){createMeat()} else if (foodType > 7.5){createMayo()}
+			}
+			foodSpawn = 0;
+			
+			
+			
+	//Objects
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 80, window.innerWidth/window.innerHeight, 1, 1000 );
+			
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			
+			
+			var geometry = new THREE.CubeGeometry( 115, 89, 1);
+			var texture = THREE.ImageUtils.loadTexture( "chefBackground.png" );
+			var material = new THREE.MeshBasicMaterial( {map: texture} );
+			var platform = new THREE.Mesh( geometry, material );
+			scene.add( platform );
+			platform.position.z = -20;
+			
+			var loader = new THREE.JSONLoader();
+				loader.load( 'Chef.json', function ( geometry, materials ) {
+					var texture = THREE.ImageUtils.loadTexture( "ChefUV.png" );
+					var material = new THREE.MeshBasicMaterial( {map: texture} );
+						dude = new THREE.Mesh( geometry, material );
+						dude.scale.set( 10, 10, 10);
+						scene.add( dude );
+						dude.position.y = -18;
+						dude.position.z = 5;
+					})
+			
+		
+			camera.position.x = 0;
+			camera.position.y = 0;
+			camera.position.z = 30;
+			camera.rotation.x = 0;
+			camera.rotation.y = 0;
+			camera.rotation.z = 0;
+						
+						
+			
+		//Loop
+			var render = function () {
+				requestAnimationFrame( render );
+			//makeFood();
+			
+			//if(keyW){camera.rotation.y+=.01;}
+			if(keyA){dude.position.x -= .6;}
+			//if(keyS){camera.rotation.y-=.01;}
+			if(keyD){dude.position.x += .6;}
+			//if(spaceDown) {createMayo()}
+			
+			
+			for(var i = 0; i < foods.length; i++) {
+				foods[i].update();
+			}
+			
+			if (foodSpawn == 0){
+					foodSpawn = 10;
+					makeFood();
+				} else {
+						if (foodSpawn >  0){foodSpawn -= 1}
+					}
+				
+			
+			renderer.render(scene, camera);
+			}
+			//setInterval(, 1000);
+			render();
+		</script>
+	</body>
+</html>
